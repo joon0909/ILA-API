@@ -1,0 +1,10 @@
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://j-why.site:3306/ila
+    username: jy
+    password: Junyoung09!
+  config:
+    import: classpath:application-key.yml
+mybatis:
+  mapper-locations: classpath:sql/*.xml
