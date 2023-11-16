@@ -1,11 +1,9 @@
 package site.jwhy.ila.ilaapi.util;
 
+import org.json.simple.JSONObject;
 import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -36,7 +34,38 @@ public class HttpConnect {
             con.disconnect();
         }
     }
+    public String post(String apiUrl, JSONObject requestBody, Map<String, String> requestHeaders) {
+        HttpURLConnection con = connect(apiUrl);
+        try {
+            con.setRequestMethod("POST");
+            for (Map.Entry<String, String> header : requestHeaders.entrySet()) {
+                con.setRequestProperty(header.getKey(), header.getValue());
+            }
 
+            // POST 요청을 위한 설정
+            con.setDoOutput(true);
+            try (OutputStream os = con.getOutputStream()) {
+                //post사용해서 requestBody 받을때 이런식으로 만들어서 주면됨
+//                JSONObject json = new JSONObject();
+//                json.put("name", this.name);
+//                json.put("age", this.age);
+                
+                byte[] input = requestBody.toJSONString().getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            int responseCode = con.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                return readBody(con.getInputStream());
+            } else {
+                return readBody(con.getErrorStream());
+            }
+        } catch (IOException e) {
+            throw new RuntimeException("API 요청과 응답 실패", e);
+        } finally {
+            con.disconnect();
+        }
+    }
     private static HttpURLConnection connect(String apiUrl) {
         try {
             URL url = new URL(apiUrl);
