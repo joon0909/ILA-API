@@ -32,16 +32,16 @@ public class TestController {
     }
     @GetMapping("/token")
     public ResultResp selectToken() throws Exception{
-        ResultResp test = new ResultResp();
+        ResultResp test = testService.selectToken();
 
-        {
-            "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAxMDQwODEwIiwic2NvcGUiOlsiY2FyZGluZm8iLCJmaW50ZWNoaW5mbyIsImlucXVpcnkiLCJsb2dpbiIsInRyYW5zZmVyIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNzA3OTcxNDkzLCJqdGkiOiJhNDIyMGZhOC02OWZhLTQxYTItOWI1Ny1hY2VjYTFiOGUyYTgifQ.qt-Oot0RvU3RIxImXmcLoz_0CjSNi3ukWmkrXHUAoVE",
-            "token_type": "Bearer",
-            "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAxMDQwODEwIiwic2NvcGUiOlsiY2FyZGluZm8iLCJmaW50ZWNoaW5mbyIsImlucXVpcnkiLCJsb2dpbiIsInRyYW5zZmVyIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNzA4ODM1NDkzLCJqdGkiOiI5MTAxNDlmYS04NmNiLTRjMGUtYmM5Mi0wODY5NGE3OWVhMGMifQ.kz8zptyimz0AcarCYUrydgwcR5uywEkalcNhBG-D9_U",
-            "expires_in": 7775999,
-            "scope": "cardinfo fintechinfo inquiry login transfer",
-            "user_seq_no": "1101040810"
-        }
+//        {
+//            "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAxMDQwODEwIiwic2NvcGUiOlsiY2FyZGluZm8iLCJmaW50ZWNoaW5mbyIsImlucXVpcnkiLCJsb2dpbiIsInRyYW5zZmVyIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNzA3OTcxNDkzLCJqdGkiOiJhNDIyMGZhOC02OWZhLTQxYTItOWI1Ny1hY2VjYTFiOGUyYTgifQ.qt-Oot0RvU3RIxImXmcLoz_0CjSNi3ukWmkrXHUAoVE",
+//            "token_type": "Bearer",
+//            "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMTAxMDQwODEwIiwic2NvcGUiOlsiY2FyZGluZm8iLCJmaW50ZWNoaW5mbyIsImlucXVpcnkiLCJsb2dpbiIsInRyYW5zZmVyIl0sImlzcyI6Imh0dHBzOi8vd3d3Lm9wZW5iYW5raW5nLm9yLmtyIiwiZXhwIjoxNzA4ODM1NDkzLCJqdGkiOiI5MTAxNDlmYS04NmNiLTRjMGUtYmM5Mi0wODY5NGE3OWVhMGMifQ.kz8zptyimz0AcarCYUrydgwcR5uywEkalcNhBG-D9_U",
+//            "expires_in": 7775999,
+//            "scope": "cardinfo fintechinfo inquiry login transfer",
+//            "user_seq_no": "1101040810"
+//        }
 
         return test;
     }

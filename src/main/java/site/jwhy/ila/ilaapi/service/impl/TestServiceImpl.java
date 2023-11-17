@@ -11,6 +11,13 @@ import site.jwhy.ila.ilaapi.repository.TestRepository;
 import site.jwhy.ila.ilaapi.service.TestService;
 import site.jwhy.ila.ilaapi.util.HttpConnect;
 
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,5 +72,71 @@ public class TestServiceImpl implements TestService {
         }
 
         return test;
+    }
+    @Override
+    public ResultResp selectToken() throws Exception{
+        ResultResp resultResp = new ResultResp();
+
+        try{
+
+            String apiUrl = "https://testapi.openbanking.or.kr/oauth/2.0/token";
+            Map<String, String> requestBody = Map.of(
+                "code", "2SbQlYUoo41NCA1CPe8s0s1yJXZQxe",
+                "client_id", "f281ea55-71bf-48ec-b78a-a6d86a03c37b",
+                "client_secret", "bdf2ab09-140c-4989-b37a-80a69637d171",
+                "redirect_uri", "http://localhost:8080/test/token",
+                "grant_type", "authorization_code"
+            );
+
+            String response = callExternalAPI(apiUrl, requestBody);
+            resultResp.getData().add(response);
+
+        }catch (Exception e){
+            log.info(e.getMessage());
+        }
+        return resultResp;
+    }
+    public String callExternalAPI(String url, Map<String, String> requestBody) throws Exception{
+        try {
+            URL apiUrl = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) apiUrl.openConnection();
+
+            // Set up the connection
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true);
+
+            // Set the content type to application/x-www-form-urlencoded
+            connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+
+            // Build the request parameters
+            StringBuilder parameters = new StringBuilder();
+            for (Map.Entry<String, String> entry : requestBody.entrySet()) {
+                if (parameters.length() != 0) {
+                    parameters.append("&");
+                }
+                parameters.append(URLEncoder.encode(entry.getKey(), StandardCharsets.UTF_8.name()));
+                parameters.append("=");
+                parameters.append(URLEncoder.encode(entry.getValue(), StandardCharsets.UTF_8.name()));
+            }
+
+            // Write the parameters to the request
+            try (DataOutputStream wr = new DataOutputStream(connection.getOutputStream())) {
+                wr.writeBytes(parameters.toString());
+                wr.flush();
+            }
+
+            // Get the response from the server
+            try (InputStreamReader reader = new InputStreamReader(connection.getInputStream())) {
+                StringBuilder response = new StringBuilder();
+                int data;
+                while ((data = reader.read()) != -1) {
+                    response.append((char) data);
+                }
+                return response.toString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
