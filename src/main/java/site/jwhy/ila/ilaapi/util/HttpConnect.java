@@ -45,11 +45,11 @@ public class HttpConnect {
             // POST 요청을 위한 설정
             con.setDoOutput(true);
             try (OutputStream os = con.getOutputStream()) {
-                //post사용해서 requestBody 받을때 이런식으로 만들어서 주면됨
+//                post사용해서 requestBody 받을때 이런식으로 만들어서 주면됨
 //                JSONObject json = new JSONObject();
 //                json.put("name", this.name);
 //                json.put("age", this.age);
-                
+
                 byte[] input = requestBody.toJSONString().getBytes("utf-8");
                 os.write(input, 0, input.length);
             }
